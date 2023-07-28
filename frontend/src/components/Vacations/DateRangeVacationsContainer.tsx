@@ -13,7 +13,7 @@ const initialRange = {
   endDate: undefined,
   key: "selection",
 }
-export function DateRangeVacations() {
+export function DateRangeVacationsContainer() {
   const [range, setRange] = useState<Range[]>([initialRange])
 
   return (

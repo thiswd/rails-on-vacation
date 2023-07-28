@@ -1,5 +1,5 @@
-import { DateRangeVacations } from "./DateRangeVacationsContainer"
+import { DateRangeVacationsContainer } from "./DateRangeVacationsContainer"
 
 export function Vacations() {
-  return <DateRangeVacations />
+  return <DateRangeVacationsContainer />
 }
