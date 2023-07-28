@@ -20,7 +20,7 @@ class Api::V1::EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
 
     if @employee.save
-      render json: @employee, status: :created, location: @employee
+      render json: @employee, status: :created
     else
       render json: @employee.errors, status: :unprocessable_entity
     end
@@ -45,14 +45,6 @@ class Api::V1::EmployeesController < ApplicationController
     end
 
     def employee_params
-      params.require(:employee).permit(:name, :position, :hiring_date)
-    end
-
-    def paginate
-      page = params["page"].to_i
-      per_page = params["per_page"].to_i
-      start = (page - 1) * per_page
-      final = start + per_page
-      @employees.slice(start, final)
+      params.require(:employee).permit(:name, :role, :hiring_date)
     end
 end

@@ -8,7 +8,7 @@ class EmployeeService
 
   def to_json
     employee.attributes.merge(
-      vacations: vacations_with_days,
+      vacations: vacations_with_days || [],
       remaining_days: remaining_days
     )
   end
