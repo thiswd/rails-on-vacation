@@ -13,6 +13,13 @@ class ComputeVacationsService
     all_vacation_days_amount - taken_vacation_days
   end
 
+  def vacations_with_days_amount
+    return unless first_year_completed?
+    vacations.map do |vacation|
+      vacation.attributes.merge(days: vacation.days_amount)
+    end
+  end
+
   private
 
   def first_year_completed?
@@ -28,7 +35,7 @@ class ComputeVacationsService
   end
 
   def taken_vacation_days
-    vacations.sum { |vacation| vacation.days_amount }.to_i
+    vacations.sum { |vacation| vacation.days_amount }
   end
 
 end
