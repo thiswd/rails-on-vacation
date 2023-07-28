@@ -2,9 +2,12 @@ class Api::V1::EmployeesController < ApplicationController
   before_action :set_employee, only: %i[show update destroy]
 
   def index
-    @employees = Employee.includes(:vacations).all
+    page = params[:page].to_i
+    per_page = params[:per_page].to_i
 
-    render json: @employees, include: :vacations
+    employees = PaginatedEmployeesService.new(page, per_page)
+
+    render json: employees.to_json
   end
 
   def show
@@ -43,5 +46,13 @@ class Api::V1::EmployeesController < ApplicationController
 
     def employee_params
       params.require(:employee).permit(:name, :position, :hiring_date)
+    end
+
+    def paginate
+      page = params["page"].to_i
+      per_page = params["per_page"].to_i
+      start = (page - 1) * per_page
+      final = start + per_page
+      @employees.slice(start, final)
     end
 end

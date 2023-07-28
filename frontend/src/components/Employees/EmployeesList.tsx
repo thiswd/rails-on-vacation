@@ -1,25 +1,37 @@
 import { MouseEvent, useEffect, useState } from "react"
-import { fetchEmployees } from "../../services/api"
+import { EmployeeType, fetchEmployee, fetchEmployees } from "../../services/api"
 import { formatDate } from "../../utils/handleDates"
+import { Pagination } from "./Pagination"
 
 const selectedStyle = "text-gray-400 bg-gray-800 hover:bg-gray-800"
 const notSelectedStyle = "bg-white hover:bg-neutral-200"
 export function EmployeesList() {
-  const [employees, setEmployees] = useState([])
+  const [employees, setEmployees] = useState<EmployeeType[]>([])
   const [selectedEmployee, setSelectedEmployee] = useState(0)
+  const [pagesAmount, setPagesAmount] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
 
-  function handleClickRow(event: MouseEvent<HTMLElement>) {
+  async function handleClickRow(event: MouseEvent<HTMLElement>) {
     const { employee } = event.currentTarget.dataset
 
     if (employee === undefined) return
 
+    const fetchedEmployee = await fetchEmployee(employee)
+
     const id: number = parseInt(employee)
     setSelectedEmployee(id)
+
+    console.log(fetchedEmployee)
   }
 
   useEffect(() => {
-    fetchEmployees().then(data => setEmployees([...(data || [])]))
-  }, [])
+    fetchEmployees(currentPage).then(data => {
+      const { employees } = data
+      const totalPages = data.total_pages
+      setEmployees([...employees])
+      setPagesAmount(totalPages)
+    })
+  }, [currentPage])
 
   return (
     <div className="w-full flex-col items-center justify-center py-4">
@@ -48,29 +60,11 @@ export function EmployeesList() {
           ))}
         </tbody>
       </table>
-      <nav className="w-full flex items-center justify-center">
-        <ul className="mx-auto inline-flex -space-x-px text-sm h-8">
-          <li>
-            <button
-              className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300"
-              id="prev"
-            >
-              Previous
-            </button>
-          </li>
-          {/* <% (1..pages_amount).each do |n| %> */}
-          {/* <button className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300" data-page-number="<%= n %>"><%= n %></button> */}
-          {/* <% end %> */}
-          <li>
-            <button
-              className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300"
-              id="next"
-            >
-              Next
-            </button>
-          </li>
-        </ul>
-      </nav>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pagesAmount={pagesAmount}
+      ></Pagination>
     </div>
   )
 }
