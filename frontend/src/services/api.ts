@@ -3,11 +3,20 @@ import axios, { AxiosError } from "axios"
 const API_URL_DEFAULT = "http://localhost:3000/api/v1/employees"
 const API_URL = import.meta.env.VITE_REACT_APP_API_URL || API_URL_DEFAULT
 
+export type VacationType = {
+  id: number
+  employee_id: number
+  start_date: Date
+  end_date: Date
+  days?: number
+}
+
 export type EmployeeType = {
   id: number
   name: string
   role: string
   hiring_date: Date
+  vacations?: VacationType[]
 }
 
 interface EmployeesResponse {
@@ -37,7 +46,9 @@ export async function fetchEmployees(
   }
 }
 
-export async function fetchEmployee(id: string): Promise<[] | undefined> {
+export async function fetchEmployee(
+  id: string,
+): Promise<EmployeeType | undefined> {
   try {
     const response = await apiClient.get(id)
     const employee = response.data

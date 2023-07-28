@@ -1,14 +1,7 @@
-interface PaginationProps {
-  currentPage: number
-  setCurrentPage: (page: number) => void
-  pagesAmount: number
-}
+import { useEmployee } from "../../hooks/useEmployee"
 
-export function Pagination({
-  currentPage,
-  setCurrentPage,
-  pagesAmount,
-}: PaginationProps) {
+export function Pagination() {
+  const { currentPage, setCurrentPage, pagesAmount } = useEmployee()
   const previousPage = () => {
     if (currentPage <= 1) return
     setCurrentPage(currentPage - 1)

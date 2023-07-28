@@ -1,37 +1,11 @@
-import { MouseEvent, useEffect, useState } from "react"
-import { EmployeeType, fetchEmployee, fetchEmployees } from "../../services/api"
+import { useEmployee } from "../../hooks/useEmployee"
 import { formatDate } from "../../utils/handleDates"
 import { Pagination } from "./Pagination"
 
 const selectedStyle = "text-gray-400 bg-gray-800 hover:bg-gray-800"
 const notSelectedStyle = "bg-white hover:bg-neutral-200"
 export function EmployeesList() {
-  const [employees, setEmployees] = useState<EmployeeType[]>([])
-  const [selectedEmployee, setSelectedEmployee] = useState(0)
-  const [pagesAmount, setPagesAmount] = useState(0)
-  const [currentPage, setCurrentPage] = useState(1)
-
-  async function handleClickRow(event: MouseEvent<HTMLElement>) {
-    const { employee } = event.currentTarget.dataset
-
-    if (employee === undefined) return
-
-    const fetchedEmployee = await fetchEmployee(employee)
-
-    const id: number = parseInt(employee)
-    setSelectedEmployee(id)
-
-    console.log(fetchedEmployee)
-  }
-
-  useEffect(() => {
-    fetchEmployees(currentPage).then(data => {
-      const { employees } = data
-      const totalPages = data.total_pages
-      setEmployees([...employees])
-      setPagesAmount(totalPages)
-    })
-  }, [currentPage])
+  const { employees, handleClickRow, selectedEmployee } = useEmployee()
 
   return (
     <div className="w-full flex-col items-center justify-center py-4">
@@ -48,9 +22,9 @@ export function EmployeesList() {
             <tr
               key={`employee-${id}`}
               className={`border-b transition-all cursor-pointer ${
-                selectedEmployee === id ? selectedStyle : notSelectedStyle
+                selectedEmployee.id === id ? selectedStyle : notSelectedStyle
               }`}
-              data-employee={id}
+              data-employee-id={id}
               onClick={handleClickRow}
             >
               <td className="px-6 py-4">{name}</td>
@@ -60,11 +34,7 @@ export function EmployeesList() {
           ))}
         </tbody>
       </table>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        pagesAmount={pagesAmount}
-      ></Pagination>
+      <Pagination />
     </div>
   )
 }
