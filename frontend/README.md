@@ -1,27 +1,26 @@
-# React + TypeScript + Vite
+Gostaríamos que você criasse, utilizando Ruby on Rails e React, uma pequena aplicação que permita gerenciar as férias dos colaboradores de uma empresa de software.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DICA:
 
-Currently, two official plugins are available:
+" Conforme a Reforma Trabalhista, a partir de 11.11.2017 as férias poderão ser usufruídas em até 3 (três) períodos, sendo que um deles não poderá ser inferior a 14 dias corridos, e os demais não poderão ser inferiores a 5 dias corridos cada um"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Desta forma, é necessário poder cadastrar os colaboradores:
+Nome
+Cargo
+Data de Contratação
+Bem como os períodos de férias (pode-se cadastrar um ou mais períodos para cada colaborador):
+Data de Início
+Data de Término
+Considere as seguintes regras para o cadastro de férias:
+Cada colaborador ganha 30 dias de férias a cada período de 12 meses.
+O primeiro período de férias só pode ser agendado para iniciar-se pelo menos 12 meses após a data de contratação.
+Não deve permitir cadastro de períodos de férias que se sobreponham, para um mesmo colaborador.
+A duração de cada período de férias não pode ser menor do que 10 dias.
+**O front-end pode ser estuturado usando ERB, para contemplar as funcionalidades. **
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+O que estará sendo avaliado:
+-> Capacidade de entendimento da demanda
+-> Detalhes na entrega (Layout / funcionalidade extra…)
+-> Completude na implementação das funcionalidades
+-> Organização e reaproveitamento do código
+-> Utilização dos recursos do framework (Ruby on Rails) e React

@@ -4,6 +4,10 @@ class Vacation < ApplicationRecord
   validates :start_date, :end_date, presence: true
   validate :vacation_duration, :vacation_overlap, :vacation_initial_period
 
+  def days_amount
+    (end_date - start_date).to_i
+  end
+
   private
 
     def vacation_duration

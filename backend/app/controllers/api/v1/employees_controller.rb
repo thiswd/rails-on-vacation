@@ -1,19 +1,21 @@
 class Api::V1::EmployeesController < ApplicationController
   before_action :set_employee, only: %i[show update destroy]
 
-  # GET /employees
   def index
-    @employees = Employee.all
+    page = params[:page].to_i
+    per_page = params[:per_page].to_i
 
-    render json: @employees
+    employees = PaginatedEmployeesService.new(page, per_page)
+
+    render json: employees.to_json
   end
 
-  # GET /employees/1
   def show
-    render json: @employee
+    employee_data = EmployeeService.new(@employee, ComputeVacationsService)
+
+    render json: employee_data.to_json
   end
 
-  # POST /employees
   def create
     @employee = Employee.new(employee_params)
 
@@ -24,7 +26,6 @@ class Api::V1::EmployeesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /employees/1
   def update
     if @employee.update(employee_params)
       render json: @employee
@@ -33,20 +34,25 @@ class Api::V1::EmployeesController < ApplicationController
     end
   end
 
-  # DELETE /employees/1
   def destroy
     @employee.destroy
   end
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_employee
-      @employee = Employee.find(params[:id])
+      @employee = Employee.includes(:vacations).find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def employee_params
       params.require(:employee).permit(:name, :position, :hiring_date)
+    end
+
+    def paginate
+      page = params["page"].to_i
+      per_page = params["per_page"].to_i
+      start = (page - 1) * per_page
+      final = start + per_page
+      @employees.slice(start, final)
     end
 end
