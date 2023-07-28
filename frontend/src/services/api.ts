@@ -16,7 +16,7 @@ export type EmployeeType = {
   name: string
   role: string
   hiring_date: Date
-  vacations?: VacationType[]
+  vacations: VacationType[]
 }
 
 interface EmployeesResponse {
