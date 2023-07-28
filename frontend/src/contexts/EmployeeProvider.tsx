@@ -16,8 +16,8 @@ interface EmployeeContextProps {
   handleClickRow: (event: MouseEvent<HTMLElement>) => Promise<void>
 }
 
-export const EmployeeContext = createContext<EmployeeContextProps | undefined>(
-  undefined,
+export const EmployeeContext = createContext<EmployeeContextProps>(
+  {} as EmployeeContextProps,
 )
 
 export function EmployeeProvider({ children }: { children: ReactNode }) {

@@ -5,8 +5,8 @@ import { EmployeeProvider } from "./contexts/EmployeeProvider"
 function App() {
   return (
     <EmployeeProvider>
-      <div className="max-w-[1024px] h-screen mx-auto flex flex-col items-center">
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <div className="max-w-[48rem] w-full min-h-screen mx-auto flex flex-col items-center">
+        <h1 className="text-3xl mt-8 mb-4">Agendamento de férias</h1>
         <Employees />
         <Vacations />
       </div>

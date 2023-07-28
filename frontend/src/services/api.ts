@@ -59,6 +59,26 @@ export async function fetchEmployee(
   }
 }
 
+export async function createVacation(
+  vacationData: VacationType,
+): Promise<void> {
+  try {
+    const { employee_id } = vacationData
+
+    const response = await apiClient.post(
+      `/${employee_id}/vacations`,
+      vacationData,
+    )
+    const createdVacation = response.data
+
+    console.log(createdVacation)
+
+    return createdVacation
+  } catch (err: unknown) {
+    handleAxiosError(err)
+  }
+}
+
 function handleAxiosError(err: unknown): never {
   const error = err as AxiosError
   if (error.response) {

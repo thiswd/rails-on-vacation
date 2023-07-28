@@ -9,12 +9,12 @@ export function EmployeesList() {
 
   return (
     <div className="w-full flex-col items-center justify-center py-4">
-      <table className="w-3xl text-sm text-left text-neutral-800 mx-auto">
+      <table className="w-full text-sm text-left text-neutral-800 mx-auto">
         <thead className="text-xs text-gray-700 uppercase bg-gray-100">
           <tr>
             <th className="px-6 py-3">Nome</th>
             <th className="px-6 py-3">Cargo</th>
-            <th className="px-6 py-3">Data de contratação</th>
+            <th className="px-6 py-3 text-center">Data de contratação</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200" data-table-users="list">
@@ -29,7 +29,9 @@ export function EmployeesList() {
             >
               <td className="px-6 py-4">{name}</td>
               <td className="px-6 py-4">{role}</td>
-              <td className="px-6 py-4">{formatDate(hiring_date)}</td>
+              <td className="px-6 py-4 text-center">
+                {formatDate(hiring_date)}
+              </td>
             </tr>
           ))}
         </tbody>
